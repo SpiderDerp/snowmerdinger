@@ -2,8 +2,18 @@ import cv2
 import numpy as np
 from apriltag import apriltag
 
-imagepath = 'tags/tag52_13_00001.png'
-image = cv2.imread(imagepath, cv2.IMREAD_GRAYSCALE)
+
+vid = cv2.VideoCapture(1)
 detector = apriltag("tagStandard52h13")
 
-detections = detector.detect(image)
+
+while True:
+    
+    ret, frame = vid.read()
+
+    image = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    detections = detector.detect(image)
+
+    cv2.imshow('frame', image)
+    
