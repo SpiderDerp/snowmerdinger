@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 from pupil_apriltags import Detector
 import copy
+import time
 
 
 
@@ -55,15 +56,17 @@ def draw_tags(
 
 		cv2.putText(image, f"{dist}", (center[0] - 30, center[1] - 30),
 					cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 255, 0), 2, cv2.LINE_AA)
-		x.append(int(float('%.2f'%tag.pose_t[0])*(18/0.64)))
-		z.append(int(float('%.2f'%tag.pose_t[2])*(18/0.64)))
+		x.append(float('%.2f'%tag.pose_t[0]))
+		z.append(float('%.2f'%tag.pose_t[2]))
 		
 	return image, x, z
 
 plt.ion()
 x = np.array(0)
 z = np.array(0)
-line1, = plt.plot(x, z, 'bo')
+
+figure, ax = plt.subplots(figsize=(10, 8))
+line1 = ax.scatter(x, z)
 
 while True:
     ret, image = vid.read()
@@ -79,10 +82,11 @@ while True:
 
     debug_image, x, z = draw_tags(debug_image, tags)    
 
-    print(x, z)
-    line1.set_xdata(x)
-    line1.set_ydata(z)
-    plt.draw()
+    ax.clear()
+    ax.scatter(x,z)
+    figure.canvas.draw()
+    figure.canvas.flush_events()
+    time.sleep(0.1)
 
     cv2.imshow('frame', debug_image)
 
