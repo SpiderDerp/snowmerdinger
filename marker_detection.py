@@ -32,7 +32,7 @@ def draw_tags(
 		tag_id = tag.tag_id
 		center = tag.center
 		corners = tag.corners
-		dist = '%.2f'%tag.pose_t[2] #gets the z-coordinate
+		dist = '%.2f'%tag.pose_t[2] #gets the z-coordinate 
 
 		center = (int(center[0]), int(center[1]))
 		corner_01 = (int(corners[0][0]), int(corners[0][1]))
@@ -56,7 +56,8 @@ def draw_tags(
 
 		cv2.putText(image, f"{dist}", (center[0] - 30, center[1] - 30),
 					cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 255, 0), 2, cv2.LINE_AA)
-		x.append(float('%.2f'%tag.pose_t[0]))
+
+		x.append(float('%.2f'%(tag.pose_t[0] - 0.16))) # change 0.16 based on the values, it is half the max x-value and ensures that the camera is at x=0
 		z.append(float('%.2f'%tag.pose_t[2]))
 		
 	return image, x, z
@@ -84,6 +85,9 @@ while True:
 
     ax.clear()
     ax.scatter(x,z)
+    ax.plot(x[1:], z[1:], 'b--')
+    ax.plot()
+    print(x)	
     figure.canvas.draw()
     figure.canvas.flush_events()
     time.sleep(0.1)
@@ -92,5 +96,3 @@ while True:
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-    
-
