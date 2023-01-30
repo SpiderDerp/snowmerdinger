@@ -21,6 +21,20 @@ at_detector = Detector(
    debug=0
 )
 
+def gen_perp(x, y, i): #function generates perpendicular line assuming the plot is a square
+    slope = (y[2] - y[1])/(x[2] - x[1])
+    perp_slop = -1/slope
+
+    intercept = y[i] - perp_slop * x[i]
+
+    xMin = min(x[1], x[2])
+    xMax = max(x[1], x[2])
+    xSeries = np.array([xMin, xMax])
+    ySeries = perp_slop * xSeries + intercept
+
+    return xSeries, ySeries
+
+
 def draw_tags(
     image,
     tags
@@ -86,6 +100,18 @@ while True:
     ax.clear()
     ax.scatter(x,z)
     ax.plot(x[1:], z[1:], 'b--')
+
+    
+    if (len(x) > 2 and len(z) > 2):
+        try:
+            xSeries, ySeries = gen_perp(x, z, 1)
+            ax.plot(xSeries, ySeries, 'r--')
+            xSeries, ySeries = gen_perp(x, z, 2)
+            ax.plot(xSeries, ySeries, 'r--')
+        except:
+            pass
+    
+
     ax.plot()
     print(x)	
     figure.canvas.draw()
