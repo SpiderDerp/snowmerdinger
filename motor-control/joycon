@@ -3,4 +3,12 @@ from pyjoycon import JoyCon, get_R_id
 joycon_id = get_R_id()
 joycon = JoyCon(*joycon_id)
 
-joycon.get_status()
+while True:
+    if joycon.get_status()['analog-sticks']['right']['vertical'] < 900:
+        print("down")
+    elif joycon.get_status()['analog-sticks']['right']['vertical'] > 2000:
+        print("up")
+    elif joycon.get_status()['analog-sticks']['right']['horizontal'] < 900:
+        print("left")
+    elif joycon.get_status()['analog-sticks']['right']['horizontal'] > 2000:
+        print("right")
