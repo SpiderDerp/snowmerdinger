@@ -22,11 +22,12 @@ at_detector = Detector(
 )
 
 def gen_perp(x, y, i): #function generates perpendicular line assuming the plot is a square
-    slope = (y[2] - y[1])/(x[2] - x[1])
+
+
+    slope = abs((y[2] - y[1])/(x[2] - x[1]))
     perp_slop = -1/slope
 
     intercept = y[i] - perp_slop * x[i]
-
     xMin = min(x[1], x[2])
     xMax = max(x[1], x[2])
     xSeries = np.array([xMin, xMax])
@@ -80,8 +81,9 @@ plt.ion()
 x = np.array(0)
 z = np.array(0)
 
-figure, ax = plt.subplots(figsize=(10, 8))
+figure, ax = plt.subplots(figsize=(10, 10))
 line1 = ax.scatter(x, z)
+#ax.axis('scaled')
 
 while True:
     ret, image = vid.read()
@@ -101,16 +103,18 @@ while True:
     ax.scatter(x,z)
     ax.plot(x[1:], z[1:], 'b--')
 
-    
+    """
     if (len(x) > 2 and len(z) > 2):
         try:
             xSeries, ySeries = gen_perp(x, z, 1)
+            print("Line 1", xSeries, ySeries)
             ax.plot(xSeries, ySeries, 'r--')
             xSeries, ySeries = gen_perp(x, z, 2)
+            print("Line 2", xSeries, ySeries)
             ax.plot(xSeries, ySeries, 'r--')
         except:
             pass
-    
+    """
 
     ax.plot()
     print(x)	

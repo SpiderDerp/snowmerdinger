@@ -1,3 +1,7 @@
 matplotlib
 opencv-python
 pupil-apriltags
+RPi.GPIO
+joycon-python 
+hidapi 
+pyglm
