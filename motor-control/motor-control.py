@@ -85,8 +85,3 @@ if __name__ == "__main__":
 
                     #GPIO.output(in3, GPIO.LOW)
                     #GPIO.output(in4, GPIO.HIGH)
-    
-        
-
-
-  
