@@ -1,9 +1,9 @@
 from gpiozero import AngularServo
 from time import sleep
-
+import evdev
 
 if __name__ == "__main__":
-    servoPIN = 17
+    servoPIN = 21
     servo = AngularServo(servoPIN, min_pulse_width = 0.0006, max_pulse_width = 0.0024)
 
     devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
@@ -19,13 +19,9 @@ if __name__ == "__main__":
                 if "up" in str(evdev.categorize(event)) :
                     print("neutral")
                     servo.angle = 0
-                    sleep(1)
                 elif "BTN_A" in str(evdev.categorize(event)):
                     print("-90")
                     servo.angle = -90
-                    sleep(1)
                 elif "BTN_Y" in str(evdev.categorize(event)):
                     print("90")
                     servo.angle = 90
-                    sleep(1)
-        
