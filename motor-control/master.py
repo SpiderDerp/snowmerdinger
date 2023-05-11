@@ -1,4 +1,5 @@
-import RPi.GPIO as GPIO          
+import RPi.GPIO as GPIO 
+from gpiozero import AngularServo         
 from time import sleep
 import evdev
 
@@ -11,6 +12,13 @@ device = evdev.InputDevice(f'/dev/input/event{x}')
 print(device)
 
 if __name__ == "__main__":
+    x,y = int(input("Insert length and width of plot:"))
+    plot = []
+    for i in range(x):
+        plot.append([])
+        for j in range(y):
+            plot[i].append("o")
+            #print(plot)
     GPIO.cleanup()
     ena = 26
     in1 = 5
@@ -19,7 +27,8 @@ if __name__ == "__main__":
     in4 = 22
     enb = 17
     temp1=1
-
+    servoPIN = 16 #plow servo
+    servo = AngularServo(servoPIN, min_pulse_width = 0.0006, max_pulse_width = 0.0024)
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(in1,GPIO.OUT)
     GPIO.setup(in2,GPIO.OUT)
@@ -43,6 +52,11 @@ if __name__ == "__main__":
 
     GPIO.output(in3, GPIO.LOW)
     GPIO.output(in4, GPIO.LOW)
+
+    position = [x-1, y-1]
+    position_map = plot
+    position_map[position[0]][position[1]] = "x"
+    previous_command = ""
     while(1):
         for event in device.read_loop():
             if event.type == evdev.ecodes.EV_KEY:
@@ -53,6 +67,31 @@ if __name__ == "__main__":
 
                     GPIO.output(in3, GPIO.LOW)
                     GPIO.output(in4, GPIO.LOW)
+                    if previous_command == "up":
+                        if plot[position[0]][position[1] + 1] == 'x':
+                            servo.angle = -90
+                        plot[position[0]][position[1]] = 'x'
+                        position_map[position[0]][position[1]] = 'o'
+                        previous_command = ""
+                        position[1] += 1
+                        position_map[position[0]][position[1]] = 'x'
+                        for i in range(len(position_map)):
+                            print(position_map[i])
+                        for i in range(len(plot)):
+                            print(plot[i])
+                    elif previous_command == 'down':
+                        if plot[position[0]][position[1] - 1] == 'x':
+                            servo.angle = -90
+                        plot[position[0]][position[1]] = 'x'
+                        position_map[position[0]][position[1]] = 'o'
+                        previous_command = ""
+                        position[1] -= 1
+                        position_map[position[0]][position[1]] = 'x'
+                        for i in range(len(position_map)):
+                            print(position_map[i])
+                        for i in range(len(plot)):
+                            print(plot[i])
+                            
                 elif "BTN_A" in str(evdev.categorize(event)):
                     print("down")
                     GPIO.output(in1,GPIO.LOW)
@@ -60,6 +99,7 @@ if __name__ == "__main__":
 
                     GPIO.output(in3, GPIO.LOW)
                     GPIO.output(in4, GPIO.HIGH)
+                    previous_command = "down"
 
                 elif "BTN_Y" in str(evdev.categorize(event)):
                     print("up")
@@ -68,6 +108,8 @@ if __name__ == "__main__":
 
                     GPIO.output(in3, GPIO.HIGH)
                     GPIO.output(in4, GPIO.LOW)
+                    previous_command = "up"
+
 
                 elif "BTN_X" in str(evdev.categorize(event)):
                     print("left")

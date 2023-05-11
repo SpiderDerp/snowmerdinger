@@ -16,10 +16,10 @@ if __name__ == "__main__":
     while True:
         for event in device.read_loop():
             if event.type == evdev.ecodes.EV_KEY:
-                if "up" in str(evdev.categorize(event)) :
-                    print("neutral")
-                    servo.angle = 0
-                elif "BTN_A" in str(evdev.categorize(event)):
+                #if "up" in str(evdev.categorize(event)) :
+                 #   print("neutral")
+                  #  servo.angle = 0
+                if "BTN_A" in str(evdev.categorize(event)):
                     print("-90")
                     servo.angle = -90
                 elif "BTN_Y" in str(evdev.categorize(event)):
