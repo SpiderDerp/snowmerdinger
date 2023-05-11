@@ -1,4 +1,5 @@
 
+
 import RPi.GPIO as GPIO          
 from time import sleep
 import evdev
@@ -13,12 +14,12 @@ print(device)
 
 if __name__ == "__main__":
     GPIO.cleanup()
-    ena = 25
-    in1 = 24
-    in2 = 23
-    in3 = 17
-    in4 = 27
-    enb = 22
+    ena = 26
+    in1 = 5
+    in2 = 6
+    in3 = 27
+    in4 = 22
+    enb = 17
     temp1=1
 
     GPIO.setmode(GPIO.BCM)

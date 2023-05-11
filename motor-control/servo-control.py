@@ -3,7 +3,7 @@ from time import sleep
 import evdev
 
 if __name__ == "__main__":
-    servoPIN = 21
+    servoPIN = 16
     servo = AngularServo(servoPIN, min_pulse_width = 0.0006, max_pulse_width = 0.0024)
 
     devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
