@@ -1,14 +1,5 @@
 import RPi.GPIO as GPIO          
 from time import sleep
-import evdev
-
-devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
-
-for device in devices:
-	print(device.path, device.name, device.phys)
-x = int(input("enter event number: "))
-device = evdev.InputDevice(f'/dev/input/event{x}')
-print(device)
 
 if __name__ == "__main__":
     GPIO.cleanup()
@@ -36,14 +27,62 @@ if __name__ == "__main__":
     p.start(75) #25 = low, 50 = medium, 75 = high
     q.start(75)
 
-    print("Reading all inputs from gamepad 0")
-    print("stop")
+
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.LOW)
 
     GPIO.output(in3, GPIO.LOW)
     GPIO.output(in4, GPIO.LOW)
-    
+
+def moveup():
+    GPIO.output(in1,GPIO.HIGH)
+    GPIO.output(in2,GPIO.LOW)
+    GPIO.output(in3, GPIO.HIGH)
+    GPIO.output(in4, GPIO.LOW)
+
+def movestop():
+    GPIO.output(in1,GPIO.LOW)
+    GPIO.output(in2,GPIO.LOW)
+
+    GPIO.output(in3, GPIO.LOW)
+    GPIO.output(in4, GPIO.LOW)
+
+def moveback():
+    GPIO.output(in1,GPIO.LOW)
+    GPIO.output(in2,GPIO.HIGH)
+
+    GPIO.output(in3, GPIO.LOW)
+    GPIO.output(in4, GPIO.HIGH)
+
+def turnright():
+    GPIO.output(in1,GPIO.HIGH)
+    GPIO.output(in2,GPIO.LOW)
+
+    GPIO.output(in3, GPIO.LOW)
+    GPIO.output(in4, GPIO.HIGH)
+
+def turnleft():
+    GPIO.output(in1,GPIO.LOW)
+    GPIO.output(in2,GPIO.HIGH)
+
+    GPIO.output(in3, GPIO.HIGH)
+    GPIO.output(in4, GPIO.LOW)
+
+
+def move(x):
+    match x:
+        case 0:
+            moveup()
+        case 1:
+            movestop()
+        case 2:
+            movedown()
+        case 3:
+            moveright()
+        case 4:
+            moveleft()
+
+'''
     while(1):
         for event in device.read_loop():
             if event.type == evdev.ecodes.EV_KEY:
@@ -85,3 +124,4 @@ if __name__ == "__main__":
 
                     GPIO.output(in3, GPIO.LOW)
                     GPIO.output(in4, GPIO.HIGH)
+'''
