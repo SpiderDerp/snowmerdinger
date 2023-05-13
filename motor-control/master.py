@@ -12,12 +12,13 @@ device = evdev.InputDevice(f'/dev/input/event{x}')
 print(device)
 
 if __name__ == "__main__":
-    x,y = int(input("Insert length and width of plot:"))
+    x= int(input("Insert width of plot:"))
+    y= int(input("Insert length of plot:"))
     plot = []
     for i in range(x):
         plot.append([])
         for j in range(y):
-            plot[i].append("o")
+            plot[i].append(" ")
             #print(plot)
     GPIO.cleanup()
     ena = 26
@@ -68,27 +69,29 @@ if __name__ == "__main__":
                     GPIO.output(in3, GPIO.LOW)
                     GPIO.output(in4, GPIO.LOW)
                     if previous_command == "up":
-                        if plot[position[0]][position[1] + 1] == 'x':
+                        if plot[position[0]-1][position[1]] == 'x':
                             servo.angle = -90
                         plot[position[0]][position[1]] = 'x'
-                        position_map[position[0]][position[1]] = 'o'
+                        position_map[position[0]][position[1]] = ' '
                         previous_command = ""
-                        position[1] += 1
+                        position[0] -= 1
                         position_map[position[0]][position[1]] = 'x'
                         for i in range(len(position_map)):
                             print(position_map[i])
+                        print()
                         for i in range(len(plot)):
                             print(plot[i])
                     elif previous_command == 'down':
-                        if plot[position[0]][position[1] - 1] == 'x':
+                        if plot[position[0]+1][position[1]] == 'x':
                             servo.angle = -90
                         plot[position[0]][position[1]] = 'x'
-                        position_map[position[0]][position[1]] = 'o'
+                        position_map[position[0]][position[1]] = ' '
                         previous_command = ""
-                        position[1] -= 1
+                        position[0] += 1
                         position_map[position[0]][position[1]] = 'x'
                         for i in range(len(position_map)):
                             print(position_map[i])
+                        print()
                         for i in range(len(plot)):
                             print(plot[i])
                             
