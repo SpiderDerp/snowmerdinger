@@ -1,4 +1,3 @@
-
 import RPi.GPIO as GPIO 
 from gpiozero import AngularServo         
 from time import sleep
@@ -58,13 +57,10 @@ def start(plot):
     position_map = plot
     position_map[position[0]][position[1]] = "x"
     previous_command = ""
-    file = open('data', 'w')
-    file.write('plot = {}'.format(plot))
-    file.close()
+    traveled_places = set()
     while(1):
         position_map = position_map
         for event in device.read_loop():
-            exec(open('data', 'r').read())
             if event.type == evdev.ecodes.EV_KEY:
                 if "up" in str(evdev.categorize(event)) :
                     print("stop")
@@ -74,9 +70,12 @@ def start(plot):
                     GPIO.output(in3, GPIO.LOW)
                     GPIO.output(in4, GPIO.LOW)
                     if previous_command == "up":
-                        if plot[position[0]-1][position[1]] == 'x':
+                        if f"{position[0]-1}, {position[1]}" in traveled_places:
                             servo.angle = -90
-                        plot[position[0]][position[1]] = 'x'
+                            print("Servo up")
+                        else:
+                            servo.angle = 0
+                        traveled_places.add(f"{position[0]}, {position[1]}")
                         position_map[position[0]][position[1]] = ' '
                         previous_command = ""
                         position[0] -= 1
@@ -84,12 +83,14 @@ def start(plot):
                         for i in range(len(position_map)):
                             print(position_map[i])
                         print()
-                        for i in range(len(plot)):
-                            print(plot[i])
+
                     elif previous_command == 'down':
-                        if plot[position[0]+1][position[1]] == 'x':
+                        if f"{position[0]+1}, {position[1]}" in traveled_places:
                             servo.angle = -90
-                        plot[position[0]][position[1]] = 'x'
+                            print("Servo up")
+                        else:
+                            servo.angle = 0
+                        traveled_places.add(f"{position[0]}, {position[1]}")
                         position_map[position[0]][position[1]] = ' '
                         previous_command = ""
                         position[0] += 1
@@ -97,8 +98,7 @@ def start(plot):
                         for i in range(len(position_map)):
                             print(position_map[i])
                         print()
-                        for i in range(len(plot)):
-                            print(plot[i])
+
                             
                 elif "BTN_A" in str(evdev.categorize(event)):
                     print("down")
@@ -134,7 +134,4 @@ def start(plot):
 
                     GPIO.output(in3, GPIO.LOW)
                     GPIO.output(in4, GPIO.HIGH)
-                file = open('data', 'w')
-                file.write('plot = {}'.format(plot))
-                file.close()
 start(plot)
