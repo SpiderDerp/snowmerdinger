@@ -4,9 +4,9 @@ import evdev
 
 if __name__ == "__main__":
     servoPIN = 16
-    servo2PIN = 23
+    servo2PIN = 6
     servo = AngularServo(servoPIN, min_pulse_width = 0.0006, max_pulse_width = 0.0024)
-    servo2 = AngularServo(servoPIN, min_pulse_width = 0.0006, max_pulse_width = 0.0024)
+    servo2 = AngularServo(servo2PIN, min_pulse_width = 0.0006, max_pulse_width = 0.0024)
 
     devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
 

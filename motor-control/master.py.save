@@ -1,4 +1,3 @@
-
 import RPi.GPIO as GPIO 
 from gpiozero import AngularServo         
 from time import sleep
@@ -12,12 +11,13 @@ x = int(input("enter event number: "))
 device = evdev.InputDevice(f'/dev/input/event{x}')
 print(device)
 plot = []
-def start(plot):
+
+if __name__ == "__main__":
     x= int(input("Insert width of plot:"))
     y= int(input("Insert length of plot:"))
-    for i in range(y):
+    for i in range(x):
         plot.append([])
-        for j in range(x):
+        for j in range(y):
             plot[i].append(" ")
             #print(plot)
     GPIO.cleanup()
@@ -54,17 +54,15 @@ def start(plot):
     GPIO.output(in3, GPIO.LOW)
     GPIO.output(in4, GPIO.LOW)
 
-    position = [y-1, x-1]
+    position = [x-1, y-1]
     position_map = plot
     position_map[position[0]][position[1]] = "x"
     previous_command = ""
-    file = open('data', 'w')
-    file.write('plot = {}'.format(plot))
-    file.close()
     while(1):
         position_map = position_map
+        global plot
+        plot = plot
         for event in device.read_loop():
-            exec(open('data', 'r').read())
             if event.type == evdev.ecodes.EV_KEY:
                 if "up" in str(evdev.categorize(event)) :
                     print("stop")
@@ -134,7 +132,3 @@ def start(plot):
 
                     GPIO.output(in3, GPIO.LOW)
                     GPIO.output(in4, GPIO.HIGH)
-                file = open('data', 'w')
-                file.write('plot = {}'.format(plot))
-                file.close()
-start(plot)
