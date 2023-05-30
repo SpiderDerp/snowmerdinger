@@ -98,7 +98,36 @@ def start(plot):
                         for i in range(len(position_map)):
                             print(position_map[i])
                         print()
-
+                    
+                    elif previous_command == 'left':
+                        if f"{position[0]}, {position[1]-1}" in traveled_places:
+                            servo.angle = -90
+                            print("Servo up")
+                        else:
+                            servo.angle = 0
+                        traveled_places.add(f"{position[0]}, {position[1]}")
+                        position_map[position[0]][position[1]] = ' '
+                        previous_command = ""
+                        position[1] -= 1
+                        position_map[position[0]][position[1]] = 'x'
+                        for i in range(len(position_map)):
+                            print(position_map[i])
+                        print()
+                    
+                    elif previous_command == 'right':
+                        if f"{position[0]}, {position[1]+1}" in traveled_places:
+                            servo.angle = -90
+                            print("Servo up")
+                        else:
+                            servo.angle = 0
+                        traveled_places.add(f"{position[0]}, {position[1]}")
+                        position_map[position[0]][position[1]] = ' '
+                        previous_command = ""
+                        position[1] += 1
+                        position_map[position[0]][position[1]] = 'x'
+                        for i in range(len(position_map)):
+                            print(position_map[i])
+                        print()                   
                             
                 elif "BTN_A" in str(evdev.categorize(event)):
                     print("down")
@@ -126,6 +155,8 @@ def start(plot):
 
                     GPIO.output(in3, GPIO.HIGH)
                     GPIO.output(in4, GPIO.LOW)
+                    previous_command = "left"
+
 
                 elif "BTN_B" in str(evdev.categorize(event)):
                     print("right")
@@ -134,4 +165,5 @@ def start(plot):
 
                     GPIO.output(in3, GPIO.LOW)
                     GPIO.output(in4, GPIO.HIGH)
+                    previous_command = "right"
 start(plot)
