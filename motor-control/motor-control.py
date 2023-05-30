@@ -13,9 +13,9 @@ print(device)
 
 if __name__ == "__main__":
     GPIO.cleanup()
-    ena = 26
-    in1 = 5
-    in2 = 6
+    ena = 23
+    in1 = 24
+    in2 = 25
     in3 = 27
     in4 = 22
     enb = 17
