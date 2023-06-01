@@ -20,7 +20,10 @@ if __name__ == "__main__":
     in4 = 22
     enb = 17
     temp1=1
-
+    servoPIN = 16
+    servo2PIN = 6
+    servo = AngularServo(servoPIN, min_pulse_width = 0.0006, max_pulse_width = 0.0024)
+    servo2 = AngularServo(servo2PIN, min_pulse_width = 0.0006, max_pulse_width = 0.0024)
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(in1,GPIO.OUT)
     GPIO.setup(in2,GPIO.OUT)
@@ -44,7 +47,7 @@ if __name__ == "__main__":
 
     GPIO.output(in3, GPIO.LOW)
     GPIO.output(in4, GPIO.LOW)
-    
+    servo.angle = 5
     while(1):
         for event in device.read_loop():
             if event.type == evdev.ecodes.EV_KEY:
