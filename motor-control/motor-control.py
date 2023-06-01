@@ -1,5 +1,6 @@
 
 import RPi.GPIO as GPIO          
+from gpiozero import AngularServo
 from time import sleep
 import evdev
 
