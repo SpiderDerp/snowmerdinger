@@ -68,19 +68,17 @@ def turnleft():
     GPIO.output(in3, GPIO.HIGH)
     GPIO.output(in4, GPIO.LOW)
 
-
 def move(x):
-    match x:
-        case 0:
-            moveup()
-        case 1:
-            movestop()
-        case 2:
-            movedown()
-        case 3:
-            moveright()
-        case 4:
-            moveleft()
+	if(x==0):
+		moveup()
+	elif(x==1):
+		movestop()
+	elif(x==2):
+		movedown()
+	elif(x==3):
+		moveright()
+	elif(x==4):
+		moveleft()
 
 '''
     while(1):

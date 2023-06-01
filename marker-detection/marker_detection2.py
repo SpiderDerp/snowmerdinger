@@ -36,7 +36,7 @@ def plotText(image, center, color, text):
     return cv2.putText(image, str(text), center, cv2.FONT_HERSHEY_SIMPLEX,
                        1, color, 3)
 
-detector = apriltag.Detector("tagStandard52h13")
+detector = apriltag.Detector()
 cam = cv2.VideoCapture(0)
 
 looping = True
