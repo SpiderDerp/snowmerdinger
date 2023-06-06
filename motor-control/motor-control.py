@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     GPIO.output(in3, GPIO.LOW)
     GPIO.output(in4, GPIO.LOW)
-    servo.angle = -15
+    servo.angle = -30
     while(1):
         for event in device.read_loop():
             if event.type == evdev.ecodes.EV_KEY:
