@@ -52,10 +52,10 @@ if __name__ == "__main__":
         t_end = time.time() + forward_time
         while time.time() < t_end:
             print("move")
-            GPIO.output(in1,GPIO.LOW)
+            GPIO.output(in1,GPIO.HIGH)
             GPIO.output(in2,GPIO.LOW)
 
-            GPIO.output(in3, GPIO.LOW)
+            GPIO.output(in3, GPIO.HIGH)
             GPIO.output(in4, GPIO.LOW)
         t_end = time.time() + turn_time
 
@@ -70,10 +70,10 @@ if __name__ == "__main__":
             t_end = time.time() + shift_time
             while time.time() < t_end:
                 print("shift")
-                GPIO.output(in1,GPIO.LOW)
+                GPIO.output(in1,GPIO.HIGH)
                 GPIO.output(in2,GPIO.LOW)
 
-                GPIO.output(in3, GPIO.LOW)
+                GPIO.output(in3, GPIO.HIGH)
                 GPIO.output(in4, GPIO.LOW)
             t_end = time.time() + turn_time
             while time.time() < t_end: 
@@ -97,10 +97,10 @@ if __name__ == "__main__":
             t_end = time.time() + forward_time
             while time.time() < t_end:
                 print("move")
-                GPIO.output(in1,GPIO.LOW)
+                GPIO.output(in1,GPIO.HIGH)
                 GPIO.output(in2,GPIO.LOW)
 
-                GPIO.output(in3, GPIO.LOW)
+                GPIO.output(in3, GPIO.HIGH)
                 GPIO.output(in4, GPIO.LOW)
              
             t_end = time.time() + turn_time        
@@ -115,8 +115,8 @@ if __name__ == "__main__":
             t_end = time.time() + forward_time
             while time.time() < t_end:
                 print("move")
-                GPIO.output(in1,GPIO.LOW)
+                GPIO.output(in1,GPIO.HIGH)
                 GPIO.output(in2,GPIO.LOW)
 
-                GPIO.output(in3, GPIO.LOW)
+                GPIO.output(in3, GPIO.HIGH)
                 GPIO.output(in4, GPIO.LOW)
