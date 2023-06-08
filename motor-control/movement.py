@@ -12,6 +12,7 @@ colorama_init(autoreset=True)
 
 @click.command()
 def makeCLI():
+    click.clear()
     title = text2art("SNOWMERDINGER", font='medium')
     print(f"{Fore.LIGHTCYAN_EX}{title}")
     click.pause()
@@ -29,11 +30,6 @@ def makeCLI():
     print(f"{Fore.LIGHTRED_EX}{artl5}")
     click.pause()
     click.clear()
-    return width, height
-
-if __name__ == "__main__":
-
-    width, height = makeCLI()
     GPIO.cleanup()
     ena = 23
     in1 = 24
@@ -149,3 +145,7 @@ if __name__ == "__main__":
 
                 GPIO.output(in3, GPIO.HIGH)
                 GPIO.output(in4, GPIO.LOW)
+
+if __name__ == "__main__":
+
+    makeCLI()
